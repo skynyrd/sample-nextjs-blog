@@ -4,19 +4,21 @@ import Layout from '../../components/layout'
 import Head from "next/head";
 import Date from "../../components/date";
 
+// `pages/posts/[...id].js` matches `/posts/a`, but also `/posts/a/b`, `/posts/a/b/c` and so on.
+//  If you do this, in getStaticPaths, you must return an array as the value of the id key like so
+//  check here for more info: https://nextjs.org/docs/routing/dynamic-routes
+
 export async function getStaticPaths() {
-  const paths = getAllPostIds()
   return {
-    paths,
-    fallback: false
+    paths: getAllPostIds(),
+    fallback: false // if page not found, returns 404. check true behaviour from the next.js documentation.
   }
 }
 
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id)
   return {
     props: {
-      postData
+      postData: await getPostData(params.id)
     }
   }
 }

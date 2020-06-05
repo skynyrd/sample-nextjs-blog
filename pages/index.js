@@ -7,10 +7,9 @@ import Date from '../components/date'
 
 // called in build time. For request time (server side rendering), use getServerSideProps(context)
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
   return {
     props: {
-      allPostsData
+      allPostsData: getSortedPostsData()
     }
   }
 }
